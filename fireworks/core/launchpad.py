@@ -205,7 +205,6 @@ class LaunchPad(FWSerializable):
             self.connection = MongoClient(
                 self.host,
                 self.port,
-                socketTimeoutMS=MONGO_SOCKET_TIMEOUT_MS,
                 username=self.username,
                 password=self.password,
                 authSource=self.authsource,
