@@ -68,6 +68,11 @@ def rlaunch(argv: Optional[Sequence[str]] = None) -> int:
     rapid_parser.add_argument(
         "--local_redirect", help="Redirect stdout and stderr to the launch directory", action="store_true"
     )
+    rapid_parser.add_argument(
+        "--no-linger",
+        help="Whenever there are no READY FireWorks, exit instead of doing the sleep/poll loop",
+        action="store_true",
+    )
 
     multi_parser.add_argument("num_jobs", help="the number of jobs to run in parallel", type=int)
     multi_parser.add_argument(
@@ -158,6 +163,7 @@ def rlaunch(argv: Optional[Sequence[str]] = None) -> int:
             strm_lvl=args.loglvl,
             timeout=args.timeout,
             local_redirect=args.local_redirect,
+            no_linger=args.no_linger,
         )
     elif args.command == "multi":
         total_node_list = None

@@ -64,6 +64,7 @@ def rapidfire(
     timeout: Optional[int] = None,
     local_redirect: bool = False,
     pdb_on_exception: bool = False,
+    no_linger: bool =False,
 ):
     """
     Keeps running Rockets in m_dir until we reach an error. Automatically creates subdirectories
@@ -109,10 +110,13 @@ def rapidfire(
 
             if rocket_ran:
                 num_launched += 1
-            elif not os.listdir(launcher_dir):
-                # remove the empty shell of a directory
-                os.chdir(curdir)
-                os.rmdir(launcher_dir)
+            else:
+                if not os.listdir(launcher_dir):
+                    # remove the empty shell of a directory
+                    os.chdir(curdir)
+                    os.rmdir(launcher_dir)
+                if no_linger:
+                    break
             if nlaunches > 0 and num_launched == nlaunches:
                 break
             if launchpad.run_exists(fworker):
